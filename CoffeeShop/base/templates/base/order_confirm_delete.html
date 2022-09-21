@@ -1,0 +1,11 @@
+{% extends 'main.html' %}
+{% block content %}
+    <div class="header-bar" id="product">
+        <a href="{% url 'customer_order' customer.id %}">&#8592; Go Back</a>
+    </div>
+    <form action="" method="POST">
+        {%csrf_token%}
+        <p>Are you sure you want to delete {{ order }} ?</p>
+        <input type="submit" value="Confirm">
+    </form>
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+{% block content %}
+{% include 'navbar.html' %}
+    <div class="container">
+        <div class="customers" id="customers">
+            <h1>Customers</h1><hr>
+            {% for customer in customers %}
+            <div class="customer">
+                <a href="{% url 'details' customer.id %}">{{ customer.name }}</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

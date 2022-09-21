@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+{% load jalali_tags %}
+{% block content %}
+    <div class="header-bar" id="product">
+        <a href="{% url 'customers' %}">&#8592; Go Back</a>
+    </div>
+    <div class="container">
+        <div class="customers">
+            <h1>Customer Details</h1><hr>
+            <table>
+                <tr>
+                    <th>نام مشتری</th>
+                    <th>خدمت رسانی</th>
+                    <th>زمان ثبت مشتری</th>
+                </tr>
+                <tr>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.served }}</td>
+                    <td>{{ customer.created_at|to_jalali:'%Y/%m/%d _ %H:%M:%S' }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

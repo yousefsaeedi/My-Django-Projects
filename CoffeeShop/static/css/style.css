@@ -1,0 +1,75 @@
+body{
+    background-color: rgb(61, 120, 122);
+    font-family: 'Times New Roman', serif;
+}
+.customers{
+    float: right;
+    font-size: 15pt;
+}
+
+.product-items{
+    float: left;
+    width: 45%;
+    font-size: 15pt;
+}
+.orders{
+    float: right;
+    font-size: 12pt;
+}
+.order{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: rgb(119, 181, 183);
+    border-top: 1px solid rgb(226, 226, 226);
+}
+td,th{
+    text-align: center;
+    padding: 10px;
+    border: 1px solid rgb(5, 100, 40);
+    border-radius: 5px;
+    border-collapse: separate;
+
+}
+tr:nth-child(2n){
+    background-color: rgba(85, 133, 205, 0.875);
+}
+tr:nth-child(2n+1){
+    background-color: rgb(44, 122, 151);
+}tr:hover{
+    background-color: rgb(66, 135, 137);
+}
+#customers{
+    text-align: right;
+}
+#customers a{
+    text-decoration: none;
+    color:rgb(1, 39, 3);
+    font-weight:bold;
+    font-size:12pt
+}
+#customers a:hover{
+    background-color: rgba(40, 72, 40, 0.621);
+    color: black;
+}
+#product a{
+    text-decoration: none;
+    color:rgb(1, 39, 3);
+    font-weight:bold;
+    font-size:15pt
+}
+#product a:hover{
+    background-color: rgba(40, 72, 40, 0.621);
+    color: black;
+}
+#orders a{
+    text-decoration: none;
+    color:rgb(1, 39, 3);
+    font-weight:bold;
+    font-size:12pt
+}
+#orders a:hover{
+    background-color: rgba(40, 72, 40, 0.621);
+    color: black;
+}

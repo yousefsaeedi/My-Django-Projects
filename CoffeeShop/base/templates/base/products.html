@@ -1,0 +1,61 @@
+{% extends 'main.html' %}
+{% load jalali_tags %}
+{% block content %}
+    <div class="container">
+        <div class="customers" id="customers">
+            <a style="font-size:27pt;" href="{% url 'customers' %}">Customers</a><hr>  
+            <p>To add a new customer please click on <a href="{% url 'create_customer' %}">Add New Customer</a></p>
+            <table>
+                <tr>
+                    <th>نام مشتری</th>
+                    <th>زمان ثبت مشتری</th>
+                    <th>تغییر یا حذف مشتری</th>
+                </tr>
+                {% for customer in customers %}
+                    {% if customer.served %}
+                        <tr style="background-color:rgb(62, 146, 95);">
+                            <td><a href="{% url 'customer_order' customer.id %}">{{ customer.name }}</a></td>
+                            <td>{{ customer.created_at|to_jalali:'%Y/%m/%d _ %H:%M:%S' }}</td>
+                            <td>
+                                <a href="{% url 'delete_customer' customer.id %}">Delete</a>
+                                <a href="{% url 'update_customer' customer.id %}">Edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr style="background-color:gray;">
+                            <td><a href="{% url 'customer_order' customer.id %}">{{ customer.name }}</a></td>
+                            <td>{{ customer.created_at|to_jalali:'%Y/%m/%d _ %H:%M:%S' }}</td>
+                            <td>
+                                <a href="{% url 'delete_customer' customer.id %}">Delete</a>
+                                <a href="{% url 'update_customer' customer.id %}">Edit</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        <div class="product-items" id="product">
+            <h1>Menu</h1><hr>  
+            <p>To add a new product please click on <a href="{% url 'create_product'%}">Add New Item</a></p>
+                <table class="product-item">
+                    <tr>
+                        <th>نام محصول</th>
+                        <th>مشخصات</th>
+                        <th>قیمت</th>
+                        <th>تغییر یا حذف محصول</th>
+                    </tr>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>
+                            <a href="{% url 'delete_product' product.id %}">Delete</a>
+                            <a href="{% url 'update_product' product.id %}">Edit</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock content %}

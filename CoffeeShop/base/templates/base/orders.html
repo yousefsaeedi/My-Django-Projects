@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+{% load jalali_tags %}
+{% block content %}
+{% include 'navbar.html' %}
+    <div class="container">
+        <div class="orders">
+            <h1>Orders</h1><hr>
+            {% for customer in customers %}
+                {% for order in orders %}
+                    {% if customer.id == order.customer.id %}
+                        <div class="order">
+                            <p>سفارش {{ customer.name }}</p>
+                            <p>{{ order.product }}</p>
+                            <p>{{ order.count }}</p>
+                            <p>{{ order.updated_at|to_jalali:'%Y/%m/%d _ %H:%M:%S' }}</p>
+                            {% if order.served %}
+                                <p>سفارش سرو شد</p>
+                            {% else %}
+                                <p>...سفارش در انتظار</p>
+                            {% endif %}
+                        </div><hr>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endblock content %}

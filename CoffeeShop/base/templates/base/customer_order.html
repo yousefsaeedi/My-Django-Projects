@@ -1,0 +1,63 @@
+{% extends 'main.html' %}
+{% load jalali_tags %}
+{% block content %}
+{% include 'navbar.html' %}
+    <div class="container">
+        <div class="orders" id="customers">
+            <h1>سفارش: {{ customer }}</h1><hr>
+            <table>
+                <tr>
+                    <th>نام سفارش</th>
+                    <th>تعداد</th>
+                    <th>زمان ثبت سفارش</th>
+                    <th>تغییر یا حذف سفارش</th>
+                </tr>
+                    {% for order in orders %}
+                        {% if order.served %}
+                            <tr style="background-color:rgb(62, 146, 95);">
+                                <td>{{ order.product }}</td>
+                                <td>{{ order.count }}</td>
+                                <td>{{ order.created_at|to_jalali:'%Y/%m/%d _ %H:%M:%S'}}</td>
+                                <td>
+                                    <a href="{% url 'delete_order' order.id %}">Delete</a>
+                                    <a href="{% url 'edit_order' order.id %}">Edit</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr style="background-color:gray;">
+                                <td>{{ order.product }}</td>
+                                <td>{{ order.count }}</td>
+                                <td>{{ order.created_at|to_jalali:'%Y/%m/%d _ %H:%M:%S' }}</td>
+                                <td>
+                                    <a href="{% url 'delete_order' order.id %}">Delete</a>
+                                    <a href="{% url 'edit_order' order.id %}">Edit</a>
+                                </td>
+                            </tr>
+                        {% endif %}  
+                    {% endfor %}
+            </table>
+            <p>هزینه کل: {{ total_cost }} تومان</p>
+        </div>
+        <div class="product-items" id="product">
+            <h1>Menu</h1><hr>  
+                <table class="product-item">
+                    <tr>
+                        <th>نام محصول</th>
+                        <th>مشخصات</th>
+                        <th>قیمت</th>
+                        <th>اضافه کردن سفارش جدید</th>
+                    </tr>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>
+                            <a href="{% url 'create_order' customer.id product.id %}">Add Order</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endblock content %}
