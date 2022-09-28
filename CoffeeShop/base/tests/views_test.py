@@ -62,10 +62,12 @@ class TestEditOrder(TestCase):
         self.assertTemplateUsed(response, 'base/update_order.html')
 
 class TestCustomerOrder(TestCase):
+
     def setUp(self):
         self.client = Client()
         self.factory = RequestFactory()
-        Customer.objects.create(name='john', served=False)
+        self.not_ordered_customer = Customer.objects.create(name='ali')
+        self.ordered_customer = Customer.objects.create(name='john', served=False)
         # Create 11 products
         number_of_products = 11
         for product_id in range(number_of_products):
@@ -74,15 +76,20 @@ class TestCustomerOrder(TestCase):
                 description=f'description  {product_id}',
                 price=1000
             )
-        self.order = Order.objects.create(customer_id=1, product_id=1, count=2)
+        self.order1 = Order.objects.create(customer_id=2, product_id=1, count=2, served=True)
+        self.order2 = Order.objects.create(customer_id=2, product_id=2, count=1, served=True)
+        self.order3 = Order.objects.create(customer_id=2, product_id=3, count=4, served=False)
+        self.orders = [self.order1.served, self.order2.served, self.order3.served]
+        self.customers = Customer.objects.all()
+
     def test_customer_order_url(self):
-        order = self.order
+        order1 = self.order1
         response = self.client.get(reverse('customer_order', args=[1]))
         self.assertEqual(response.status_code, 200)
+
     def test_not_ordered_customer(self):
-        not_ordering_customer = Customer.objects.create(name='ali')
-        orders = Order.objects.filter(customer=not_ordering_customer)
         request = self.factory.get('/customer-order/2/')
         response = customerOrder(request, 2)
-        html = response.content.decode('utf8')
         self.assertEqual(response.status_code, 200)
+
+        
