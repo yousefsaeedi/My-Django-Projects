@@ -2,6 +2,7 @@ from django.test import TestCase, Client, RequestFactory
 from django.urls import resolve, reverse
 from base.models import Customer, Product, Order
 from base.views import customerOrder
+from base.forms import OrderForm
 import pytest
 
 
@@ -92,4 +93,24 @@ class TestCustomerOrder(TestCase):
         response = customerOrder(request, 2)
         self.assertEqual(response.status_code, 200)
 
-        
+class TestCreateOrder(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.factory = RequestFactory()
+        Customer.objects.create(name='yousef')
+        Product.objects.create(name='something', description='blahblah blah', price=1000)
+        self.order1 = Order.objects.create(customer_id=1, product_id=1, count=1)
+        self.order2 = Order.objects.create(customer_id=1, product_id=1, count=2)
+
+    def test_create_order_url(self):
+        order = self.order1
+        response = self.client.get(reverse('create_order', args=[1, 1]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_form_post(self):
+        response = self.client.post("/create-order/1/1/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_form_get(self):
+        response = self.client.get("/create-order/1/1/")
+        self.assertEqual(response.status_code, 200)
